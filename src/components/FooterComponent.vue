@@ -3,11 +3,11 @@
     <div class="container">
       <div class="row">
         <!-- 二维码 -->
-        <div  class="col-4 qrcode">
+        <div class="col-4 qrcode">
           <img src="https://uploadfiles.nowcoder.com/app/app_download.png" class="img-thumbnail" style="width:136px;"/>
         </div>
         <!-- 公司信息 -->
-        <div  class="col-8 detail-info">
+        <div class="col-8 detail-info">
           <div class="row">
             <div class="col">
               <ul class="nav">
@@ -60,6 +60,10 @@
     </div>
   </footer>
 </template>
+
+<script>
+export default {}
+</script>
 
 <style scoped>
 

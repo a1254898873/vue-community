@@ -43,7 +43,6 @@ footer {
 	padding: 20px 0;
 	font-size: 12px;
 	position: absolute;
-	bottom: 0;
 	width: 100%;
 }
 
@@ -62,7 +61,7 @@ footer .company-info li {
 
 .main {
 	padding: 20px 0;
-	padding-bottom: 200px;
+	padding-bottom: 20px;
 }
 
 .main .container {
