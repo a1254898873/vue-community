@@ -23,7 +23,13 @@
           <div class="text-muted mt-3">
             发布于 <b>{{ formatTimer(postInfo.createTime) }}</b>
             <ul class="d-inline float-right">
-              <li class="d-inline ml-2"><a href="#" class="text-primary">赞 11</a></li>
+              <li class="d-inline ml-2"><a class="text-primary"
+                                           @click="like(1,postInfo.id,userInfo.id,postInfo.id)">{{
+                  postLike.likeStatus == 1 ? '已赞' : '赞'
+                }} <i>{{
+                    postLike.likeCount
+                  }}</i></a>
+              </li>
               <li class="d-inline ml-2">|</li>
               <li class="d-inline ml-2"><a href="#replyform" class="text-primary">回帖 <i
               >{{ postInfo.commentCount }}</i></a></li>
@@ -66,7 +72,12 @@
                   formatTimer(element.comment.createTime)
                 }}</b></span>
               <ul class="d-inline float-right">
-                <li class="d-inline ml-2"><a class="text-primary">赞(1)</a></li>
+                <li class="d-inline ml-2"><a class="text-primary"
+                                             @click="like(2,element.comment.id,element.comment.userId,element.comment.entityId)">{{
+                    element.like.likeStatus == 1 ? '已赞' : '赞'
+                  }} (<i>{{
+                      element.like.likeCount
+                    }}</i>)</a></li>
                 <li class="d-inline ml-2">|</li>
                 <li class="d-inline ml-2" @click="submitReply(element.comment.id)"><a class="text-primary">回复(<i>{{
                     element.replyCount
@@ -92,7 +103,14 @@
                   <span
                   >{{ formatTimer(reply.reply.createTime) }}</span>
                   <ul class="d-inline float-right">
-                    <li class="d-inline ml-2"><a href="#" class="text-primary">赞(1)</a></li>
+                    <li class="d-inline ml-2"><a
+                        class="text-primary"
+                        @click="like(2,reply.reply.id,reply.reply.userId,element.comment.entityId)">{{
+                        reply.like.likeStatus == 1 ? '已赞' : '赞'
+                      }}
+                      (<i>{{
+                          reply.like.likeCount
+                        }}</i>)</a></li>
                     <li class="d-inline ml-2">|</li>
                     <li class="d-inline ml-2" @click="submitReplyToUser(element.comment.id,reply.reply.userId)"><a
                         class="text-primary">回复</a></li>
@@ -151,7 +169,7 @@
 import {useRoute} from 'vue-router'
 import {onMounted, reactive, toRefs} from 'vue'
 import axios from "../utils/axios"
-import { formatTimer } from "@/utils/timeUtil";
+import {formatTimer} from "@/utils/timeUtil";
 import {ElMessage, ElMessageBox} from "element-plus";
 
 export default {
@@ -162,6 +180,7 @@ export default {
     const state = reactive({
       postInfo: {title: "1"},
       userInfo: {headerUrl: "http://images.nowcoder.com/head/149t.png"},
+      postLike: {},
       comments: [],
       page: {
         current: 1,
@@ -182,12 +201,12 @@ export default {
     })
 
 
-
     const getPostDetail = () => {
       axios.get('/discuss/detail/' + postId + '/?current=' + state.page.current + '&limit=' + state.page.limit).then((res) => {
         state.postInfo = res.post;
         state.userInfo = res.user;
         state.comments = res.comments;
+        state.postLike = res.like;
         console.log(state.comments)
       })
     }
@@ -273,6 +292,20 @@ export default {
           })
     }
 
+    const like = (entityType, entityId, entityUserId, postId) => {
+      axios
+          .post("/like", {
+            "entityType": entityType,
+            "entityId": entityId,
+            "entityUserId": entityUserId,
+            "postId": postId
+          })
+          .then((res) => {
+            getPostDetail()
+          });
+    }
+
+
     //获取指定页数帖子
     const curPage = (index) => {
       state.page.current = index;
@@ -299,6 +332,7 @@ export default {
       submitComment,
       submitReply,
       submitReplyToUser,
+      like,
       curPage,
       prePage,
       nextPage
