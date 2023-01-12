@@ -32,7 +32,13 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item text-center">
-                  <router-link to="/profile">个人主页</router-link>
+                  <router-link :to="{
+      name: 'profile',
+      query: {
+        id: userInfo.id
+      }
+    }">个人主页
+                  </router-link>
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item text-center">
