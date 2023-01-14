@@ -5,13 +5,31 @@
       <div class="position-relative">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active" href="profile.html">个人信息</a>
+            <router-link :to="{
+      name: 'profile',
+      query: {
+        id: userInfo.id
+      }
+    }">
+              <a class="nav-link active">个人信息</a></router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="my-post.html">我的帖子</a>
+            <router-link :to="{
+      name: 'mypost',
+      query: {
+        id: userInfo.id
+      }
+    }"><a class="nav-link">我的帖子</a>
+            </router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="my-reply.html">我的回复</a>
+
+            <router-link :to="{
+      name: 'myreply',
+      query: {
+        id: userInfo.id
+      }
+    }"><a class="nav-link">我的回复</a></router-link>
           </li>
         </ul>
       </div>

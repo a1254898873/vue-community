@@ -52,6 +52,16 @@ const router = createRouter({
             path: '/follower',
             name: 'follower',
             component: () => import(/* webpackChunkName: "login" */ '../pages/FollowerPage')
+        },
+        {
+            path: '/mypost',
+            name: 'mypost',
+            component: () => import(/* webpackChunkName: "login" */ '../pages/MyPostPage')
+        },
+        {
+            path: '/myreply',
+            name: 'myreply',
+            component: () => import(/* webpackChunkName: "login" */ '../pages/MyReply')
         }
     ]
 })
