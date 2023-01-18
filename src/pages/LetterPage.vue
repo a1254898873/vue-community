@@ -5,13 +5,20 @@
         <!-- 选项 -->
         <ul class="nav nav-tabs mb-3">
           <li class="nav-item">
-            <a class="nav-link position-relative active" th:href="@{/letter/list}">
-              朋友私信<span class="badge badge-danger" th:text="${letterUnreadCount}"
-                        th:if="${letterUnreadCount!=0}">3</span>
-            </a>
+            <router-link :to="{
+      name: 'letter'
+    }">
+              <a class="nav-link position-relative active">
+                朋友私信<span class="badge badge-danger"
+                          v-if="letterUnreadCount != 0">{{ letterUnreadCount }}</span>
+              </a></router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link position-relative" href="notice.html">系统通知<span class="badge badge-danger">27</span></a>
+            <router-link :to="{
+      name: 'notice'
+    }">
+              <a class="nav-link position-relative" >系统通知<span
+                  class="badge badge-danger">27</span></a></router-link>
           </li>
         </ul>
         <button type="button" class="btn btn-primary btn-sm position-absolute rt-0" data-toggle="modal"
@@ -73,11 +80,12 @@
       }
     }">
                 {{ element.conversation.content }}
+
+                <ul class="d-inline font-size-12 float-right">
+                  <li class="d-inline ml-2"><a href="#" class="text-primary">共<i>{{ element.letterCount }}</i>条会话</a>
+                  </li>
+                </ul>
               </router-link>
-              <ul class="d-inline font-size-12 float-right">
-                <li class="d-inline ml-2"><a href="#" class="text-primary">共<i>{{ element.letterCount }}</i>条会话</a>
-                </li>
-              </ul>
             </div>
           </div>
         </li>
@@ -103,7 +111,7 @@
 <script>
 import {onMounted, reactive, toRefs} from 'vue'
 import axios from "@/utils/axios";
-import { formatTimer } from "@/utils/timeUtil";
+import {formatTimer} from "@/utils/timeUtil";
 import {ElMessage} from "element-plus";
 
 export default {
@@ -145,7 +153,6 @@ export default {
             getLetterList()
           });
     }
-
 
 
     onMounted(() => {

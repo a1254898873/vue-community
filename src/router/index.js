@@ -34,6 +34,16 @@ const router = createRouter({
             component: () => import(/* webpackChunkName: "login" */ '../pages/LetterDetailPage')
         },
         {
+            path: '/notice',
+            name: 'notice',
+            component: () => import(/* webpackChunkName: "login" */ '../pages/NoticePage')
+        },
+        {
+            path: '/noticeDetail',
+            name: 'noticeDetail',
+            component: () => import(/* webpackChunkName: "login" */ '../pages/NoticeDetailPage')
+        },
+        {
             path: '/profile',
             name: 'profile',
             component: () => import(/* webpackChunkName: "login" */ '../pages/ProfilePage')
